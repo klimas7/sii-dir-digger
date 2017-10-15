@@ -3,11 +3,20 @@
     <f:entry title="${it.name}" description="${it.description}">
         <div name="parameter" description="${it.description}" >
             <input type="hidden" name="name" value="${it.name}"/>
-            <select name="value">
-                <j:forEach var="file" items="${it.getFiles(1)}">
-                    <f:option value="${file.key}">${file.value}</f:option>
+            <table>
+                <j:forEach var="depth" begin="1" end="${it.depth}">
+                    <tr>
+                        <td>Level: ${depth}</td>
+                        <td>
+                            <select name="value_${depth}">
+                                <j:forEach var="file" items="${it.getFiles(depth)}">
+                                    <f:option value="${file.key}">${file.value}</f:option>
+                                </j:forEach>
+                            </select>
+                        </td>
+                    </tr>
                 </j:forEach>
-            </select>
+            </table>
         </div>
     </f:entry>
 </j:jelly>
