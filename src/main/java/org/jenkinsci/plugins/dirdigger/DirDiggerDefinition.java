@@ -8,10 +8,16 @@ import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
 
 public class DirDiggerDefinition extends ParameterDefinition {
+    private final String root;
 
     @DataBoundConstructor
-    public DirDiggerDefinition(String name, String description) {
+    public DirDiggerDefinition(String name, String description, String root) {
         super(name, description);
+        this.root = root;
+    }
+
+    public String getRoot() {
+        return root;
     }
 
     @Override
