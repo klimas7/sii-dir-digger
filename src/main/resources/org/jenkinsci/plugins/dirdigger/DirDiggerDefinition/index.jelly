@@ -8,9 +8,9 @@
                     <tr>
                         <td>Level: ${depth}</td>
                         <td>
-                            <select name="value_${depth}">
+                            <select name="value">
                                 <j:forEach var="file" items="${it.getFiles(depth)}">
-                                    <f:option value="${file.key}">${file.value}</f:option>
+                                    <f:option value="${file}">${file}</f:option>
                                 </j:forEach>
                             </select>
                         </td>

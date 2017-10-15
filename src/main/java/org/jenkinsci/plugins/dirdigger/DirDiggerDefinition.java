@@ -1,12 +1,16 @@
 package org.jenkinsci.plugins.dirdigger;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import hudson.Extension;
 import hudson.model.ParameterDefinition;
 import hudson.model.ParameterValue;
 import hudson.model.StringParameterValue;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
@@ -32,9 +36,20 @@ public class DirDiggerDefinition extends ParameterDefinition {
 
     @Override
     public ParameterValue createValue(StaplerRequest req, JSONObject jo) {
-        StringParameterValue value = req.bindJSON(StringParameterValue.class, jo);
-        value.setDescription(getDescription());
-        return value;
+        StringBuilder strValue = new StringBuilder();
+        strValue.append(root).append(File.separator);
+        Object value = jo.get("value");
+        if (value instanceof String) {
+            strValue.append(value).append(File.separator);
+        } else if (value instanceof JSONArray) {
+            JSONArray jsonArray = (JSONArray) value;
+            for (Object element : JSONArray.toCollection(jsonArray, String.class) ) {
+                strValue.append(element).append(File.separator);
+            }
+        }
+        strValue.setLength(strValue.length() -1 );
+        DirDiggerValue dirDiggerValue = new DirDiggerValue(jo.getString("name"), strValue.toString());
+        return dirDiggerValue;
     }
 
     @Override
@@ -42,10 +57,10 @@ public class DirDiggerDefinition extends ParameterDefinition {
         return null;
     }
 
-    public Map<String, String> getFiles(Integer level) {
-        Map<String, String> files = new HashMap<>();
-        files.put("/opt/test_1", "test_1" + level);
-        files.put("/opt/test_2", "test_2" + level);
+    public List<String> getFiles(Integer level) {
+        List<String> files = new ArrayList<>();
+        files.add("test_A_" + level);
+        files.add("test_B_" + level);
         return files;
     }
 
