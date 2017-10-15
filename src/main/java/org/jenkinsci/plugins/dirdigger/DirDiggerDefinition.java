@@ -61,10 +61,7 @@ public class DirDiggerDefinition extends ParameterDefinition {
 
     public List<String> getFiles(Integer level) {
         FileTreeBuilder.build(fileTree, depth);
-        List<String> files = new ArrayList<>();
-        files.add("test_A_" + level);
-        files.add("test_B_" + level);
-        return files;
+        return FileTreeBuilder.getFileFromLevel(fileTree, level);
     }
 
 
