@@ -1,5 +1,8 @@
 package org.jenkinsci.plugins.dirdigger;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import hudson.Extension;
 import hudson.model.ParameterDefinition;
 import hudson.model.ParameterValue;
@@ -29,6 +32,14 @@ public class DirDiggerDefinition extends ParameterDefinition {
     public ParameterValue createValue(StaplerRequest req) {
         return null;
     }
+
+    public Map<String, String> getFiles() {
+        Map<String, String> files = new HashMap<>();
+        files.put("/opt/test_1", "test_1");
+        files.put("/opt/test_2", "test_2");
+        return files;
+    }
+
 
     @Extension
     public static class DescriptorImpl extends ParameterDescriptor {
