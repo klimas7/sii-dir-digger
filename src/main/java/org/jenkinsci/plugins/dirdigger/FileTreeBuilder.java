@@ -2,6 +2,7 @@ package org.jenkinsci.plugins.dirdigger;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class FileTreeBuilder {
@@ -46,8 +47,11 @@ public class FileTreeBuilder {
         if (level == 1) {
             return fileTree.getChildren();
         }
-        else {
+        else if (fileTree.getChildren().size() > 0) {
             return getChildren(fileTree.getChildren().get(0), level - 1);
+        }
+        else {
+            return Collections.emptyList();
         }
     }
 }

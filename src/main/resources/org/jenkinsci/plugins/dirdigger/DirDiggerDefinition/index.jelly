@@ -3,6 +3,7 @@
     <f:entry title="${it.name}" description="${it.description}">
         <div name="parameter" description="${it.description}" >
             <input type="hidden" name="name" value="${it.name}"/>
+            <j:invoke method="initTree" on="${it}"/>
             <table>
                 <j:forEach var="depth" begin="1" end="${it.depth}">
                     <tr>
