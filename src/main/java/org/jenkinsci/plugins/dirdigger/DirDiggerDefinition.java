@@ -6,6 +6,7 @@ import java.util.Map;
 import hudson.Extension;
 import hudson.model.ParameterDefinition;
 import hudson.model.ParameterValue;
+import hudson.model.StringParameterValue;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
@@ -25,7 +26,9 @@ public class DirDiggerDefinition extends ParameterDefinition {
 
     @Override
     public ParameterValue createValue(StaplerRequest req, JSONObject jo) {
-        return null;
+        StringParameterValue value = req.bindJSON(StringParameterValue.class, jo);
+        value.setDescription(getDescription());
+        return value;
     }
 
     @Override
