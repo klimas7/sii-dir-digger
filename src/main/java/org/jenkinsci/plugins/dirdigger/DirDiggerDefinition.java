@@ -13,15 +13,21 @@ import org.kohsuke.stapler.StaplerRequest;
 
 public class DirDiggerDefinition extends ParameterDefinition {
     private final String root;
+    private final Integer depth;
 
     @DataBoundConstructor
-    public DirDiggerDefinition(String name, String description, String root) {
+    public DirDiggerDefinition(String name, String description, String root, Integer depth) {
         super(name, description);
         this.root = root;
+        this.depth = depth;
     }
 
     public String getRoot() {
         return root;
+    }
+
+    public Integer getDepth() {
+        return depth;
     }
 
     @Override
