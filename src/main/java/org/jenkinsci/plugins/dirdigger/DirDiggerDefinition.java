@@ -18,12 +18,14 @@ import org.kohsuke.stapler.StaplerRequest;
 public class DirDiggerDefinition extends ParameterDefinition {
     private final String root;
     private final Integer depth;
+    private TreeNode<String> fileTree;
 
     @DataBoundConstructor
     public DirDiggerDefinition(String name, String description, String root, Integer depth) {
         super(name, description);
         this.root = root;
         this.depth = depth;
+        this.fileTree = new TreeNode<>(root);
     }
 
     public String getRoot() {
@@ -58,6 +60,7 @@ public class DirDiggerDefinition extends ParameterDefinition {
     }
 
     public List<String> getFiles(Integer level) {
+        FileTreeBuilder.build(fileTree, depth);
         List<String> files = new ArrayList<>();
         files.add("test_A_" + level);
         files.add("test_B_" + level);
