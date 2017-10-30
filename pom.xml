@@ -7,14 +7,14 @@
         <version>2.33</version>
         <relativePath />
     </parent>
-    <artifactId>sii-dir-digger</artifactId>
+    <artifactId>mib3-flash-board</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>hpi</packaging>
     <properties>
         <jenkins.version>2.7.3</jenkins.version>
     </properties>
-    <name>Sii Dir Digger</name>
-    <description>Plugin show directory structure</description>
+    <name>MIB3 Flash Board Jenkins Plugin</name>
+    <description>Plugin flash choosen board</description>
     <url>https://wiki.jenkins-ci.org/display/JENKINS/TODO+Plugin</url>
     <licenses>
         <license>
