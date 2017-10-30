@@ -61,7 +61,7 @@ public class DirDiggerDefinition extends ParameterDefinition {
     public static class DescriptorImpl extends ParameterDescriptor {
         @Override
         public String getDisplayName() {
-            return "Dir Digger";
+            return "Mib3 board flash";
         }
     }
 }
