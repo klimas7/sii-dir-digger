@@ -12,16 +12,17 @@ import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
 
 public class DirDiggerDefinition extends ParameterDefinition {
-    private final String root;
+    private String login = null;
+    private String hostname = null;
+    private String root = null;
 
     @DataBoundConstructor
-    public DirDiggerDefinition(String name, String description, String root) {
+    public DirDiggerDefinition(String name, String description, String login, String hostname, String root) {
         super(name, description);
-        this.root = root;
-    }
 
-    public String getRoot() {
-        return root;
+        this.login = login;
+        this.hostname = hostname;
+        this.root = root;
     }
 
     @Override
@@ -29,6 +30,18 @@ public class DirDiggerDefinition extends ParameterDefinition {
         StringParameterValue value = req.bindJSON(StringParameterValue.class, jo);
         value.setDescription(getDescription());
         return value;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getHostname() {
+        return hostname;
+    }
+
+    public String getRoot() {
+        return root;
     }
 
     @Override
