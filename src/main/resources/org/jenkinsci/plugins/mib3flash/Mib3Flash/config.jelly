@@ -1,18 +1,18 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:f="/lib/form">
-    <f:entry title="name" field="name">
+    <f:entry title="Name" field="name">
         <f:textbox/>
     </f:entry>
-    <f:entry title="description" field="description">
+    <f:entry title="Description" field="description">
         <f:textbox/>
     </f:entry>
-    <f:entry title="login" field="login">
+    <f:entry title="Login" field="login">
         <f:textbox/>
     </f:entry>
-    <f:entry title="hostname" field="hostname">
+    <f:entry title="Hostname" field="hostname">
         <f:textbox/>
     </f:entry>
-    <f:entry title="root" field="root">
+    <f:entry title="Root" field="root">
         <f:textbox/>
     </f:entry>
 </j:jelly>
