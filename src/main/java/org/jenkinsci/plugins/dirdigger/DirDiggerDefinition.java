@@ -1,7 +1,11 @@
 package org.jenkinsci.plugins.dirdigger;
 
-import java.util.HashMap;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 import java.util.Map;
+import java.util.TreeMap;
 
 import hudson.Extension;
 import hudson.model.ParameterDefinition;
@@ -50,9 +54,47 @@ public class DirDiggerDefinition extends ParameterDefinition {
     }
 
     public Map<String, String> getFiles() {
-        Map<String, String> files = new HashMap<>();
-        files.put("/opt/test_1", "test_1");
-        files.put("/opt/test_2", "test_2");
+
+        Map<String, String> files = new TreeMap<>();
+
+        try {
+            String command =
+                "ssh " + login + "@" + hostname +
+                    " '" +
+                        "cd " + root + "; " +
+                        "for board in *; do readlink $board; done | while read board; do echo \"$board `cat $board/flash_hardware_revision` `cat $board/flash_hardware_variant`:$board\"; done" +
+                    " '";
+
+            ProcessBuilder builder = new ProcessBuilder();
+            builder.command("sh", "-c", command);
+            Process ssh = builder.start();
+
+            //Read output
+            StringBuilder out = new StringBuilder();
+            BufferedReader br = new BufferedReader(new InputStreamReader(ssh.getInputStream()));
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                String[] key_value = line.split(":");
+                String key = key_value[0];
+                String value = key_value[1];
+                files.put(value, key);
+            }
+
+            //Check result
+            int exitcode;
+            if ((exitcode = ssh.waitFor()) == 0) {
+                System.out.println("Mib3FlashBoard: run command success");
+            }
+            else {
+                System.out.println("Mib3FlashBoard: run command failure: " + exitcode);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         return files;
     }
 
