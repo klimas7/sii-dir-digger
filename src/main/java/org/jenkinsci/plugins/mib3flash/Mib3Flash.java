@@ -1,4 +1,4 @@
-package org.jenkinsci.plugins.dirdigger;
+package org.jenkinsci.plugins.mib3flash;
 
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -15,13 +15,13 @@ import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
 
-public class DirDiggerDefinition extends ParameterDefinition {
+public class Mib3Flash extends ParameterDefinition {
     private String login = null;
     private String hostname = null;
     private String root = null;
 
     @DataBoundConstructor
-    public DirDiggerDefinition(String name, String description, String login, String hostname, String root) {
+    public Mib3Flash(String name, String description, String login, String hostname, String root) {
         super(name, description);
 
         this.login = login;
