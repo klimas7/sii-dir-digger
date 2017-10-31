@@ -53,9 +53,9 @@ public class Mib3Flash extends ParameterDefinition {
         return null;
     }
 
-    public Map<String, String> getFiles() {
+    public Map<String, String> getEntries() {
 
-        Map<String, String> files = new TreeMap<>();
+        Map<String, String> entries = new TreeMap<>();
 
         try {
             // Build ssh command to run
@@ -75,7 +75,7 @@ public class Mib3Flash extends ParameterDefinition {
                 String[] key_value = line.split(":");
                 String key = key_value[0];
                 String value = key_value[1];
-                files.put(value, key);
+                entries.put(value, key);
             }
 
             // Check result
@@ -94,7 +94,7 @@ public class Mib3Flash extends ParameterDefinition {
             e.printStackTrace();
         }
 
-        return files;
+        return entries;
     }
 
 
