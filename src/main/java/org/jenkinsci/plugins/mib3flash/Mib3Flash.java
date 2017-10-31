@@ -68,7 +68,6 @@ public class Mib3Flash extends ParameterDefinition {
             Process ssh = builder.start();
 
             // Read output
-            StringBuilder out = new StringBuilder();
             BufferedReader br = new BufferedReader(new InputStreamReader(ssh.getInputStream(), "UTF-8"));
             String line = null;
             while ((line = br.readLine()) != null) {
