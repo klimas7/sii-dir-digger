@@ -12,7 +12,7 @@
     <f:entry title="Hostname" field="hostname">
         <f:textbox/>
     </f:entry>
-    <f:entry title="Root" field="root">
+    <f:entry title="Command" field="command">
         <f:textbox/>
     </f:entry>
 </j:jelly>

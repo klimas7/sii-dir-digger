@@ -18,15 +18,15 @@ import org.kohsuke.stapler.StaplerRequest;
 public class Mib3Flash extends ParameterDefinition {
     private String login = null;
     private String hostname = null;
-    private String root = null;
+    private String command = null;
 
     @DataBoundConstructor
-    public Mib3Flash(String name, String description, String login, String hostname, String root) {
+    public Mib3Flash(String name, String description, String login, String hostname, String command) {
         super(name, description);
 
         this.login = login;
         this.hostname = hostname;
-        this.root = root;
+        this.command = command;
     }
 
     @Override
@@ -44,8 +44,8 @@ public class Mib3Flash extends ParameterDefinition {
         return hostname;
     }
 
-    public String getRoot() {
-        return root;
+    public String getCommand() {
+        return command;
     }
 
     @Override
@@ -58,18 +58,16 @@ public class Mib3Flash extends ParameterDefinition {
         Map<String, String> files = new TreeMap<>();
 
         try {
-            String command =
-                "ssh " + login + "@" + hostname +
-                    " '" +
-                        "cd " + root + "; " +
-                        "for board in *; do readlink $board; done | while read board; do echo \"$board `cat $board/flash_hardware_revision` `cat $board/flash_hardware_variant`:$board\"; done" +
-                    " '";
+            // Build ssh command to run
+            String ssh_command = "ssh " + login + "@" + hostname + " \"" + command + "\"";
+            System.out.println("Mib3FlashBoard: run command: " + ssh_command);
 
+            // Run command in shell subprocess
             ProcessBuilder builder = new ProcessBuilder();
-            builder.command("sh", "-c", command);
+            builder.command("sh", "-c", ssh_command);
             Process ssh = builder.start();
 
-            //Read output
+            // Read output
             StringBuilder out = new StringBuilder();
             BufferedReader br = new BufferedReader(new InputStreamReader(ssh.getInputStream()));
             String line = null;
@@ -80,7 +78,7 @@ public class Mib3Flash extends ParameterDefinition {
                 files.put(value, key);
             }
 
-            //Check result
+            // Check result
             int exitcode;
             if ((exitcode = ssh.waitFor()) == 0) {
                 System.out.println("Mib3FlashBoard: run command success");
@@ -89,6 +87,7 @@ public class Mib3Flash extends ParameterDefinition {
                 System.out.println("Mib3FlashBoard: run command failure: " + exitcode);
             }
 
+        // Handle possible exceptions
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
