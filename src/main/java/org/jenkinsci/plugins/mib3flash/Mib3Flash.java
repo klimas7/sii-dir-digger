@@ -3,6 +3,7 @@ package org.jenkinsci.plugins.mib3flash;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.InputStream;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -57,6 +58,10 @@ public class Mib3Flash extends ParameterDefinition {
 
         Map<String, String> entries = new TreeMap<>();
 
+        
+        InputStream is = null;
+        InputStreamReader isr = null;
+        BufferedReader br = null;
         try {
             // Build ssh command to run
             String ssh_command = "ssh " + login + "@" + host + " \"" + command + "\"";
@@ -68,7 +73,9 @@ public class Mib3Flash extends ParameterDefinition {
             Process ssh = builder.start();
 
             // Read output
-            BufferedReader br = new BufferedReader(new InputStreamReader(ssh.getInputStream(), "UTF-8"));
+            is = ssh.getInputStream();
+            isr = new InputStreamReader(is, "UTF-8");
+            br = new BufferedReader(isr);
             String line = null;
             while ((line = br.readLine()) != null) {
                 String[] key_value = line.split(":");
@@ -91,6 +98,14 @@ public class Mib3Flash extends ParameterDefinition {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+        // Java is painfull
+        finally {
+            if(null != br) {
+                try {
+                    br.close();
+                } catch (Exception ignore) {}
+            }
         }
 
         return entries;
