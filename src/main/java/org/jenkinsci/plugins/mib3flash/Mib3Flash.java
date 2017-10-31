@@ -29,13 +29,6 @@ public class Mib3Flash extends ParameterDefinition {
         this.command = command;
     }
 
-    @Override
-    public ParameterValue createValue(StaplerRequest req, JSONObject jo) {
-        StringParameterValue value = req.bindJSON(StringParameterValue.class, jo);
-        value.setDescription(getDescription());
-        return value;
-    }
-
     public String getLogin() {
         return login;
     }
@@ -46,6 +39,13 @@ public class Mib3Flash extends ParameterDefinition {
 
     public String getCommand() {
         return command;
+    }
+
+    @Override
+    public ParameterValue createValue(StaplerRequest req, JSONObject jo) {
+        StringParameterValue value = req.bindJSON(StringParameterValue.class, jo);
+        value.setDescription(getDescription());
+        return value;
     }
 
     @Override
