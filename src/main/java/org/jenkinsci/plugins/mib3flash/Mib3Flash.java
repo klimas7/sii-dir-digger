@@ -17,15 +17,15 @@ import org.kohsuke.stapler.StaplerRequest;
 
 public class Mib3Flash extends ParameterDefinition {
     private String login = null;
-    private String hostname = null;
+    private String host = null;
     private String command = null;
 
     @DataBoundConstructor
-    public Mib3Flash(String name, String description, String login, String hostname, String command) {
+    public Mib3Flash(String name, String description, String login, String host, String command) {
         super(name, description);
 
         this.login = login;
-        this.hostname = hostname;
+        this.host = host;
         this.command = command;
     }
 
@@ -40,8 +40,8 @@ public class Mib3Flash extends ParameterDefinition {
         return login;
     }
 
-    public String getHostname() {
-        return hostname;
+    public String getHost() {
+        return host;
     }
 
     public String getCommand() {
@@ -59,7 +59,7 @@ public class Mib3Flash extends ParameterDefinition {
 
         try {
             // Build ssh command to run
-            String ssh_command = "ssh " + login + "@" + hostname + " \"" + command + "\"";
+            String ssh_command = "ssh " + login + "@" + host + " \"" + command + "\"";
             System.out.println("Mib3FlashBoard: run command: " + ssh_command);
 
             // Run command in shell subprocess

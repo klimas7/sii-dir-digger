@@ -9,7 +9,7 @@
     <f:entry title="Login" field="login">
         <f:textbox/>
     </f:entry>
-    <f:entry title="Hostname" field="hostname">
+    <f:entry title="Host" field="host">
         <f:textbox/>
     </f:entry>
     <f:entry title="Command" field="command">
